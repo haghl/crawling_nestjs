@@ -1,9 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import * as puppeteer from 'puppeteer'
 import { ICrawlData } from './crawl.interface'
-import * as fs from 'fs'
 import * as xlsx from 'xlsx'
-import path from 'path'
 
 @Injectable()
 export class CrawlService {
@@ -36,16 +34,17 @@ export class CrawlService {
           arr.push({ news, url })
         }
 
-        if (nextButton) {
-          // 다음 버튼이 있다면
-          await Promise.all([
-            page.waitForNavigation(), // 다음 페이지 로딩 완료 대기
-            nextButton.click(), // 다음 버튼 클릭
-          ])
-        } else {
-          // 없다면 종료
-          break
-        }
+        break
+        // if (nextButton) {
+        //   // 다음 버튼이 있다면
+        //   await Promise.all([
+        //     page.waitForNavigation(), // 다음 페이지 로딩 완료 대기
+        //     nextButton.click(), // 다음 버튼 클릭
+        //   ])
+        // } else {
+        //   // 없다면 종료
+        //   break
+        // }
       }
 
       return this.saveDataToExcel(arr, excelName)
